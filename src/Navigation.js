@@ -7,6 +7,9 @@ function Navigation() {
             <Link to="/">
                 <button>Home</button>
             </Link>
+            <Link to="/example">
+                <button>example</button>
+            </Link>
             <Link to="/lifecycle">
                 <button>lifecycle</button>
             </Link>
