@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+//useState
+//useEffect
 const Info = () => {
     const [name, setName] = useState('');
     const [nickname, setNickname] = useState('');

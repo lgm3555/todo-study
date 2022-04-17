@@ -16,6 +16,9 @@ function Navigation() {
             <Link to="/hook">
                 <button>hook</button>
             </Link>
+            <Link to="/sass">
+                <button>sass</button>
+            </Link>
         </div>
     )
 }
