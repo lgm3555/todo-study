@@ -19,6 +19,9 @@ function Navigation() {
             <Link to="/sass">
                 <button>sass</button>
             </Link>
+            <Link to="/todoapp">
+                <button>todoApp</button>
+            </Link>
         </div>
     )
 }

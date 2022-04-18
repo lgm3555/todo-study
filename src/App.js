@@ -5,6 +5,7 @@ import LifeCycleApp from './lifecycle/LifeCycleApp';
 import HookApp from './hook/HookApp';
 import Navigation from './Navigation';
 import SassApp from './sass/SassApp';
+import TodoApp from './todoList/App';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/lifecycle" element={<LifeCycleApp />} />
         <Route path="/hook" element={<HookApp />} />
         <Route path="/sass" element={<SassApp />} />
+        <Route path="/todoapp" element={<TodoApp />} />
       </Routes>
     </BrowserRouter>
   );
