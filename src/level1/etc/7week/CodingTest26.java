@@ -1,6 +1,6 @@
 public class CodingTest26 {
 	public static void main(String[] args) {
-		solution(121);
+		solution(new int[] {1,2,1});
 	}
 
 	/**

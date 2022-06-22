@@ -1,7 +1,7 @@
 
 public class CodingTest31 {
 	public static void main(String[] args) {
-		solution([2, 5]);
+		solution(new int[]{2, 5});
 	}
 
 	/**

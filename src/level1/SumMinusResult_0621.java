@@ -3,7 +3,7 @@ package level1;
 import java.util.Arrays;
 import java.util.TreeSet;
 
-public class SumMinusResult {
+public class SumMinusResult_0621 {
     public static void main(String[] args) {
         int[] absolutes = {4,7,12};
         boolean[] signs = {true, false, true};

@@ -1,7 +1,7 @@
 
 public class CodingTest22 {
 	public static void main(String[] args) {
-		solution("123");
+		solution(123);
 	}
 
 	/**

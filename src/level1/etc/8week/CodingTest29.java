@@ -1,13 +1,13 @@
 
 public class CodingTest29 {
 	public static void main(String[] args) {
-		solution(3);
+		solution(3, 5);
 	}
 
 	/**
 	 * 최대공약수와 최소공배수 Solution (https://programmers.co.kr/learn/courses/30/lessons/12940)
 	 * 
-	 * @param num 자연수
+	 * @param n 자연수
 	 * @return 자연수를 뒤집어 각 자리 숫자를 원소로 가지는 배열
 	 */
 	public static int[] solution(int n, int m) {
@@ -27,7 +27,7 @@ public class CodingTest29 {
         return answer;
 	}
 	
-	public int gcd(int a, int b) {
+	public static int gcd(int a, int b) {
 		if (a % b == 0) {
 			return b;
 		}
