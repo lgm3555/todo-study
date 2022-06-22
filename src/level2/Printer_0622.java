@@ -18,7 +18,6 @@ public class Printer_0622 {
      */
     public static int solution(int[] priorities, int location) {
         Queue<HashMap<Integer, Integer>> q1 = new LinkedList<>();
-        Queue<HashMap<Integer, Integer>> q2 = new LinkedList<>();
         ArrayList<Integer> list = new ArrayList<>();
 
         for (int i=0; i<priorities.length; i++) {
@@ -34,18 +33,15 @@ public class Printer_0622 {
         for (int i=0; i<list.size(); i++) {
             for (int j=0; j <q1.size(); j++) {
                 if (q1.peek().containsValue(list.get(i))) {
-                    q2.add(q1.poll());
+                    if (q1.peek().containsKey(location)) {
+                        return i+1;
+                    } else {
+                        q1.poll();
+                    }
                     break;
                 } else {
                     q1.add(q1.poll());
                 }
-            }
-        }
-
-        int size = q2.size();
-        for (int i=0; i<size; i++) {
-            if (q2.poll().containsKey(location)) {
-                return i+1;
             }
         }
 
