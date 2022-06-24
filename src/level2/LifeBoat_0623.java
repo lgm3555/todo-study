@@ -5,7 +5,8 @@ import java.util.Arrays;
 
 public class LifeBoat_0623 {
     public static void main(String[] args) {
-        System.out.println(solution1(new int[]{70, 50, 80, 50}, 100));
+        System.out.println(solution1(new int[]{70, 80, 50}, 100));
+        //System.out.println(solution1(new int[]{70, 50, 80, 50}, 100));
     }
 
     public static int solution1(int[] people, int limit) {
@@ -17,20 +18,16 @@ public class LifeBoat_0623 {
             list.add(i);
         }
 
-        for (int i=0; i<list.size(); i++) {
-            if (i == 0 && list.get(i) > limit) return list.size();
-            if (i == list.size() - 1) {
-                answer++;
-                break;
-            }
+        while (!list.isEmpty()) {
+            if (list.get(0) > limit) return list.size();
 
-            if (list.get(i) + list.get(i+1) > limit) {
-                answer++;
+            if (list.get(0) + list.get(list.size() - 1) > limit) {
+                list.remove(list.size() - 1);
             } else {
-                if (i % 2 == 1) {
-                    list.remove(i+1);
-                }
+                list.remove(list.size() - 1);
+                if (list.size() > 0) list.remove(0);
             }
+            answer++;
         }
 
         return answer;
