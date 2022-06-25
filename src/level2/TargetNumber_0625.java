@@ -25,19 +25,20 @@ public class TargetNumber_0625 {
         stack.add(0);
 
         dfs(stack, target, 0, 0);
-        return answer / 2;
+        return answer;
     }
 
     public void dfs(Stack<Integer> stack, int target, int check, int hap) {
         Stack<Integer> dfsStack = (Stack<Integer>) stack.clone();
         if (!dfsStack.isEmpty()) {
             hap += dfsStack.pop() * check;
-            dfs(dfsStack, target, 1, hap);
-            dfs(dfsStack, target, -1, hap);
-        } else {
-            if (hap == target) {
+
+            if (hap == target && dfsStack.size() == 0) {
                 answer++;
             };
+
+            dfs(dfsStack, target, 1, hap);
+            dfs(dfsStack, target, -1, hap);
         }
     }
 }
