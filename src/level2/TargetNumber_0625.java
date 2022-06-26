@@ -1,5 +1,6 @@
 package level2;
 
+import java.lang.annotation.Target;
 import java.util.*;
 
 public class TargetNumber_0625 {
@@ -7,7 +8,7 @@ public class TargetNumber_0625 {
 
     public static void main(String[] args) {
         TargetNumber_0625 targetNumber_0625 = new TargetNumber_0625();
-        System.out.println(targetNumber_0625.solution(new int[] {1,1,1,1,1}, 3));
+         System.out.println(targetNumber_0625.solution(new int[] {1,1,1,1,1}, 3));
     }
 
     /**
