@@ -34,6 +34,7 @@ public class LifeBoat_0623 {
     }
 
     /**
+    /**
      * 구명보트 Solution (https://programmers.co.kr/learn/courses/30/lessons/42885)
      *
      * @param people

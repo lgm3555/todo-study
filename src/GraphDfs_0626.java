@@ -1,41 +1,23 @@
 import java.util.*;
 
-public class GraphBfsDfs {
+public class GraphDfs_0626 {
     private static final int n = 8;    // node 수
     public static List<List<Integer>> graph = new ArrayList<>();
     public static boolean[] visit;
 
     public static void main(String[] args) {
-        GraphBfsDfs graphBfsDfs = new GraphBfsDfs();
-        graphBfsDfs.setGraph();
+        GraphDfs_0626 graphDfs = new GraphDfs_0626();
+        //인접 리스트
+        graphDfs.setGraph();
+
         for (int i = 0; i < graph.size(); i++) {
             System.out.println(i + " -> " + graph.get(i));
         }
         System.out.println();
 
-        System.out.print("bfs: ");
+        System.out.print("dfs: ");
         visit = new boolean[n];
-        //graphBfsDfs.bfs(0);
-        //graphBfsDfs.dfs(0);
-    }
-
-    // 너비우선탐색
-    public void bfs(int startNode) {
-        Queue<Integer> q = new LinkedList<>();
-        visit[startNode] = true;
-        q.offer(startNode);
-
-        while (!q.isEmpty()) {
-            int x = q.poll();
-            System.out.print(x + " ");
-            for (int i = 0; i < graph.get(x).size(); i++) {
-                int y = graph.get(x).get(i);
-                if (!visit[y]) {
-                    visit[y] = true;
-                    q.offer(y);
-                }
-            }
-        }
+        graphDfs.dfs(0);
     }
 
     // 깊이우선탐색
