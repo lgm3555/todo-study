@@ -24,7 +24,7 @@ public class Dijkstra_0627 {
     }
 
     //우선순위 큐에서 정렬기준을 잡기 위해 Comparable 구현
-    static class Node implements Comparable<Node> {
+    public static class Node implements Comparable<Node> {
         int index;  //노드 번호
         int distance;   //이동 할 노드까지의 거리
 
@@ -37,6 +37,14 @@ public class Dijkstra_0627 {
         @Override
         public int compareTo(Node o) {
             return Integer.compare(this.distance, o.distance);
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "index=" + index +
+                    ", distance=" + distance +
+                    '}';
         }
     }
 
