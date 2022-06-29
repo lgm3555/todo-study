@@ -4,29 +4,29 @@ import java.util.*;
 
 public class WordConvert {
     public static void main(String[] args) {
-        System.out.println(solution("hit", "cog", new String[] {"hot","dot","dog","lot","log"}));
+        System.out.println(solution("hit", "cog", new String[] {"hot","dot","dog","lot","log","cog"}));
     }
 
-    static final int INF = Integer.MAX_VALUE;
     public static ArrayList<ArrayList<String>> graph = new ArrayList<>();
     public static boolean[] visit;
     public static ArrayList<String> subWord = new ArrayList<>();
     public static int answer = 0;
 
     public static void bfs(int startNode, int check) {
-        Queue<Integer> queue = new LinkedList<>();
+        Stack<Integer> stack = new Stack<>();
         visit[startNode] = true;
-        queue.offer(startNode);
+        stack.push(startNode);
 
-        while (!queue.isEmpty()) {
-            System.out.println("queue = " + queue);
-            int x = queue.poll();
+        while (!stack.isEmpty()) {
+            System.out.println("stack = " + stack);
+            int x = stack.pop();
+            System.out.println("x = " + x);
             for (int i=0; i<graph.get(x).size(); i++) {
                 int y = subWord.indexOf(graph.get(x).get(i));
                 if (check == y) return;
                 if (!visit[y]) {
                     visit[y] = true;
-                    queue.offer(y);
+                    stack.push(y);
                 }
             }
             answer++;
@@ -34,13 +34,21 @@ public class WordConvert {
         }
     }
 
+    /**
+     * 단어 변환 (https://programmers.co.kr/learn/courses/30/lessons/43163)
+     * 
+      * @param begin
+     * @param target
+     * @param words
+     * @return
+     */
     public static int solution(String begin, String target, String[] words) {
 
-        boolean bFlag = false;
+        boolean bFlag = true;
 
         for (int i=0; i<words.length; i++) {
             subWord.add(words[i]);
-            if (words[i].equals(target)) bFlag = true;
+            if (words[i].equals(target)) bFlag = false;
         }
 
         if (bFlag) return 0;
@@ -77,6 +85,6 @@ public class WordConvert {
         
         bfs(subWord.size()-1, subWord.indexOf(target));
 
-        return answer;
+        return answer+1;
     }
 }
