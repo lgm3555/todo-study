@@ -54,17 +54,15 @@ public class Delivery_0627 {
                 visit[nodeIndex] = true;
             }
 
-            if (dist > distance[nodeIndex]) {
-                continue;
-            }
-
+            System.out.println(nodeIndex + "_graph.get(nodeIndex).toString() = " + graph.get(nodeIndex).toString());
+            
             for (Node linkedNode : graph.get(nodeIndex)) {
                 if (dist + linkedNode.distance < distance[linkedNode.index]) {
                     distance[linkedNode.index] = dist + linkedNode.distance;
-                    //System.out.println("Arrays.toString(distance) = " + Arrays.toString(distance));
                     pQ.offer(new Node(linkedNode.index, distance[linkedNode.index]));
                 }
             }
+            System.out.println("pQ = " + pQ);
         }
     }
 
@@ -92,10 +90,10 @@ public class Delivery_0627 {
             graph.get(road[i][1]).add(new Node(road[i][0], road[i][2]));
         }
 
-        /*for (int i=0; i<road.length; i++) {
+        for (int i=0; i<road.length; i++) {
             System.out.println(i + "_graph = " + graph.get(i).toString());
-        }*/
-
+        }
+        System.out.println();
         dijkstra(1);
 
         System.out.println(Arrays.toString(distance));

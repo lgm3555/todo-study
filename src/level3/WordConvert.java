@@ -12,7 +12,7 @@ public class WordConvert {
     public static ArrayList<String> subWord = new ArrayList<>();
     public static int answer = 0;
 
-    public static void bfs(int startNode, int check) {
+    public static void dfs(int startNode, int check) {
         Stack<Integer> stack = new Stack<>();
         visit[startNode] = true;
         stack.push(startNode);
@@ -37,13 +37,14 @@ public class WordConvert {
     /**
      * 단어 변환 (https://programmers.co.kr/learn/courses/30/lessons/43163)
      * 
-      * @param begin
+     * @param begin
      * @param target
      * @param words
      * @return
      */
     public static int solution(String begin, String target, String[] words) {
 
+        //target이 없을 경우 체크
         boolean bFlag = true;
 
         for (int i=0; i<words.length; i++) {
@@ -59,6 +60,7 @@ public class WordConvert {
 
         System.out.println("subWord.toString()) = " + subWord.toString());
 
+        //그래프
         for (int i=0; i<subWord.size(); i++) {
             ArrayList<String> subList = new ArrayList<>();
             for (int j=0; j<subWord.size(); j++) {
@@ -81,9 +83,11 @@ public class WordConvert {
             System.out.println(i + " _ " + subWord.get(i) + " = " + graph.get(i).toString());
         }
 
+        System.out.println();
         System.out.println("subWord.indexOf(target) = " + subWord.indexOf(target));
-        
-        bfs(subWord.size()-1, subWord.indexOf(target));
+        System.out.println();
+
+        dfs(subWord.size()-1, subWord.indexOf(target));
 
         return answer+1;
     }
