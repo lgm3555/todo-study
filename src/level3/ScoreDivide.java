@@ -9,7 +9,8 @@ public class ScoreDivide {
         System.out.println(solution(new int[]{1,3,7,8,10,15}, 3));
     }
 
-    public static class IntervalNode implements Comparable<IntervalNode>{
+    //정렬 기준은 interval
+    public static class IntervalNode implements Comparable<IntervalNode> {
         int interval;
         int index;
 
@@ -20,6 +21,14 @@ public class ScoreDivide {
         @Override
         public int compareTo(IntervalNode next) {
             return next.interval - this.interval;
+        }
+
+        @Override
+        public String toString() {
+            return "IntervalNode{" +
+                    "interval=" + interval +
+                    ", index=" + index +
+                    '}';
         }
     }
 
@@ -35,40 +44,56 @@ public class ScoreDivide {
     public static int solution(int[] scores, int k) {
         int answer = 0;
         int n = scores.length;
+
         IntervalNode[] intervalDiffs = new IntervalNode[n - 1];
+        // 인접한 학생이랑 점수 차
         for (int i = 0; i < n - 1; i++) {
             int interval = scores[i + 1] - scores[i];
             intervalDiffs[i] = new IntervalNode(interval, i);
         }
 
+        System.out.println("Arrays.toString(intervalDiffs) = " + Arrays.toString(intervalDiffs));
+        //점수 차 기준 정렬
         Arrays.sort(intervalDiffs);
+        System.out.println("Arrays.toString(intervalDiffs) = " + Arrays.toString(intervalDiffs));
+
+        // score 점수 ArrayList로 이동
         List<Integer> scoresList = new ArrayList<Integer>();
         for (int i : scores) {
             scoresList.add(i);
         }
 
+        System.out.println("scoresList = " + scoresList);
+
         int[] splitIndexs = new int[k - 1];
-        for (int i = 0; i < k - 1; i++) {
+        //조를 나누는 인덱스 번호
+        for (int i=0; i<k-1; i++) {
             splitIndexs[i] = intervalDiffs[i].index + 1;
         }
 
+        System.out.println("Arrays.toString(splitIndexs) = " + Arrays.toString(splitIndexs));
         Arrays.sort(splitIndexs);
+        System.out.println("Arrays.toString(splitIndexs) = " + Arrays.toString(splitIndexs));
+
         int beforeIdx = 0;
         for (int i = 0; i < splitIndexs.length; i++) {
             int cutIdx = splitIndexs[i];
 
-            if (beforeIdx == cutIdx) {
-                answer += 0;
-            } else {
+            if (beforeIdx != cutIdx) {
                 List<Integer> subList = scoresList.subList(beforeIdx, cutIdx);
-                answer += (subList.get(subList.size() - 1) - subList.get(0));
+                System.out.println("subList.size() = " + subList.size());
+                System.out.println("subList = " + subList);
+
+                //가장 높은 점수 - 가장 낮은 점수 구해서 더하기
+                answer = answer + (subList.get(subList.size() - 1) - subList.get(0));
             }
 
             beforeIdx = cutIdx;
         }
 
         List<Integer> subList = scoresList.subList(beforeIdx, scoresList.size());
-        answer += (subList.get(subList.size() - 1) - subList.get(0));
+        //마지막 조 가장 높은 점수 - 가장 낮은 점수 구해서 더하기
+        answer = answer + (subList.get(subList.size() - 1) - subList.get(0));
         return answer;
     }
 }
