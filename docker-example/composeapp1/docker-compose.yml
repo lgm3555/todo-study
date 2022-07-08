@@ -1,0 +1,43 @@
+version: "3.3"
+services:
+        mysql_app:
+                image: mysql:8.0
+                container_name: mysql_app
+                volumes:
+                        - mydb_data:/var/lib/mysql
+                restart: always
+                ports:
+                        - "3306:3306"
+                networks:
+                        - mydb-net
+                environment: 
+                        - MYSQL_ROOT_PASSWORD=123456
+                        - MYSQL_DATABASE=wpdb
+                        - MYSQL_USER=wpuser
+                        - MYSQL_PASSWORD=123456
+        wordpress_app:
+                depends_on:
+                        - mysql_app
+                image: wordpress:5.7
+                container_name: wordpress_app
+                volumes:
+                        - myweb_data:/var/www/html
+                        - ${PWD}/myweb-log:/var/log
+                restart: always
+                ports:
+                        - "8888:80"
+                networks:
+                        - mydb-net
+                        - myapp-net
+                environment:
+                        - WORDPRESS_DB_HOST=mysql_app:3306
+                        - WORDPRESS_DB_NAME=wpdb
+                        - WORDPRESS_DB_USER=wpuser
+                        - WORDPRESS_DB_PASSWORD=123456
+networks:
+        myapp-net: {}
+        mydb-net: {}
+
+volumes:
+        mydb_data: {}
+        myweb_data: {}
