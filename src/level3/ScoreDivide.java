@@ -79,14 +79,12 @@ public class ScoreDivide {
         for (int i = 0; i < splitIndexs.length; i++) {
             int cutIdx = splitIndexs[i];
 
-            if (beforeIdx != cutIdx) {
-                List<Integer> subList = scoresList.subList(beforeIdx, cutIdx);
-                System.out.println("subList.size() = " + subList.size());
-                System.out.println("subList = " + subList);
+            List<Integer> subList = scoresList.subList(beforeIdx, cutIdx);
+            System.out.println("subList.size() = " + subList.size());
+            System.out.println("subList = " + subList);
 
-                //가장 높은 점수 - 가장 낮은 점수 구해서 더하기
-                answer = answer + (subList.get(subList.size() - 1) - subList.get(0));
-            }
+            //가장 높은 점수 - 가장 낮은 점수 구해서 더하기
+            answer = answer + (subList.get(subList.size() - 1) - subList.get(0));
 
             beforeIdx = cutIdx;
         }

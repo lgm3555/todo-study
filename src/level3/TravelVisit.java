@@ -37,6 +37,15 @@ public class TravelVisit {
      */
     public static String[] solution(String[][] tickets) {
 
+        return new String[] {};
+    }
+
+    /*
+    public static HashMap<String, ArrayList<String>> graph = new HashMap<>();
+    public static HashMap<String, Boolean> visit = new HashMap<>();
+    public static ArrayList<String> tempAnswer = new ArrayList<>();
+    public static String[] solution(String[][] tickets) {
+
         for (int i=0; i<tickets.length; i++) {
             graph.put(tickets[i][0], new ArrayList<>());
         }
@@ -62,8 +71,6 @@ public class TravelVisit {
             answer[i] = tempAnswer.get(i);
         }
 
-        System.out.println("Arrays.toString(answer) = " + Arrays.toString(answer));
-        
         return answer;
     }
 
@@ -75,6 +82,18 @@ public class TravelVisit {
         while (!stack.isEmpty()) {
             String x = stack.pop();
 
+            if (ticketNum != tempAnswer.size()-1 && stack.isEmpty() && graph.get(x).size() == 0) {
+                String temp = tempAnswer.get(tempAnswer.size() - 1);
+                tempAnswer.remove(tempAnswer.size() - 1);
+                graph.get(tempAnswer.get(tempAnswer.size() - 1)).add(temp);
+                x = graph.get(tempAnswer.get(tempAnswer.size() - 1)).get(0);
+                graph.get(tempAnswer.get(tempAnswer.size() - 1)).remove(0);
+                tempAnswer.add(x);
+            }
+
+            System.out.println("x = " + x);
+            System.out.println("stack = " + stack);
+
             if (graph.get(x) == null) {
                 continue;
             }
@@ -85,11 +104,6 @@ public class TravelVisit {
                 graph.get(x).remove(0);
             }
         }
-
-        if (ticketNum != tempAnswer.size() - 1) {
-            for (int i=0; i<tempAnswer.size(); i++) {
-                System.out.println("tempAnswer = " + tempAnswer);
-            }
-        }
     }
+    */
 }
