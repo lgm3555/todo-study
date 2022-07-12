@@ -37,6 +37,7 @@ public class EnglishConnect {
                 System.out.println("check2 = " + check);
                 break;
             } else if (!words[i-1].substring(words[i-1].length()-1, words[i-1].length()).equals(words[i].substring(0, 1))) { // 단어 마지막 글자와 다음 단어 첫 글자 비교
+                //if (!(words[i - 1].charAt(words[i - 1].length() - 1) == words[i].charAt(0))) {
                 check = i;
                 System.out.println("check3 = " + check);
                 break;
