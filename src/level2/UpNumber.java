@@ -2,44 +2,50 @@ package level2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class UpNumber {
     public static void main(String[] args) {
-        solution("4177252841", 4);
+        //775841
+        solution("4197252841", 4);
+        //65432
+        //solution("654321", 1);
+        //6
+        //solution("654321", 5);
+
     }
 
+    /**
+     * 큰 수 만들기 (https://school.programmers.co.kr/learn/courses/30/lessons/42883)
+     *
+     * @param number
+     * @param k
+     * @return
+     */
     public static String solution(String number, int k) {
         String answer = "";
-
         ArrayList<String> list = new ArrayList<>(Arrays.asList(number.split("")));
 
-        int temp = 0;
-        int start = 0;
-        int finish = list.size() - k;
-        while (true) {
-            System.out.println("start = " + start + " finish = " + finish);
-            for (int j=start; j<finish; j++) {
-                if (Integer.parseInt(list.get(j)) > temp) {
-                    temp = Integer.parseInt(list.get(j));
-                    start = j;
-                }
-            }
-            finish = finish == list.size() ? list.size() : finish++;
-            System.out.println("temp = " + temp);
-            answer += temp;
-            temp = 0;
+        int size = list.size();
+        int temp = Integer.parseInt(list.get(0));
+        for (int i=1; i<list.size(); i++) {
 
-            if (answer.length() == list.size()-k) {
-                break;
+            if (size - k == list.size()) break;
+
+            if (Integer.parseInt(list.get(i)) > temp) {
+                list.remove(i-1);
+                i = i-2 < 0 ? 0 : i-2;
+            } else if (i == list.size()-1) {
+                list.remove(i);
+                i = i-2 < 0 ? 0 : i-2;
             }
+            temp = Integer.parseInt(list.get(i));
         }
 
-        System.out.println("answer = " + answer);
+        for (int i=0; i<list.size(); i++) {
+            answer += list.get(i);
+        }
 
         return answer;
     }
 }
-// 10 = 4177252841
-// 0 ~ 6 = 4177252
-// 2 ~ 7 = 72528
-//
