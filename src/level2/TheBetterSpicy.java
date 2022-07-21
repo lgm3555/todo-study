@@ -41,7 +41,7 @@ public class TheBetterSpicy {
                     else answer++;
                 }
                 break;
-            }
+            } 
 
             queue.add(queue.poll() + (queue.poll() * 2));
             answer++;
