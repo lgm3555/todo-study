@@ -18,7 +18,10 @@ _cgo_*
 _obj
 _test
 _testmain.go
+*.iml
 
+/.idea/
+/.vscode/
 /VERSION.cache
 /bin/
 /build.out
