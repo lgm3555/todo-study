@@ -25,6 +25,15 @@ function Navigation() {
             <Link to="/routerapp">
                 <button>routerApp</button>
             </Link>
+            <Link to="/02">
+                <button>02</button>
+            </Link>
+            <Link to="/03">
+                <button>03</button>
+            </Link>
+            <Link to="/04">
+                <button>04</button>
+            </Link>
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import './meterialize.css';
 import { Routes, Route } from 'react-router-dom';
 import ExampleApp from './example/ExampleApp';
 import LifeCycleApp from './lifecycle/LifeCycleApp';
@@ -7,10 +8,19 @@ import Navigation from './Navigation';
 import SassApp from './sass/SassApp';
 import TodoApp from './todoList/App';
 import RouterApp from './router/RouterApp';
+import ExApp2 from './02/App';
+import ExApp3 from './03/App';
+import ExApp4 from './04/App';
 
 function App() {
   return (
-    <Routes>
+    <div>
+      <nav>
+        <div className='nav-wrapper'>
+          <div>두잇! 리액트 시작하기</div>
+        </div>
+      </nav>
+      <Routes>
       <Route path="/" element={<Navigation />} />
       <Route path="/example" element={<ExampleApp />} />
       <Route path="/lifecycle" element={<LifeCycleApp />} />
@@ -18,7 +28,11 @@ function App() {
       <Route path="/sass" element={<SassApp />} />
       <Route path="/todoapp" element={<TodoApp />} />
       <Route path="/routerapp/*" element={<RouterApp />} />
+      <Route path="/02/*" element={<ExApp2/>} />
+      <Route path="/03/*" element={<ExApp3/>} />
+      <Route path="/04/*" element={<ExApp4/>} />
     </Routes>
+    </div>
   );
 }
 
