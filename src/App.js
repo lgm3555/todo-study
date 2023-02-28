@@ -10,7 +10,6 @@ import TodoApp from './todoList/App';
 import RouterApp from './router/RouterApp';
 import ExApp2 from './02/App';
 import ExApp3 from './03/App';
-import ExApp4 from './04/App';
 
 function App() {
   return (
@@ -30,7 +29,6 @@ function App() {
       <Route path="/routerapp/*" element={<RouterApp />} />
       <Route path="/02/*" element={<ExApp2/>} />
       <Route path="/03/*" element={<ExApp3/>} />
-      <Route path="/04/*" element={<ExApp4/>} />
     </Routes>
     </div>
   );
