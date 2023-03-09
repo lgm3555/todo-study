@@ -1,0 +1,42 @@
+.dict_table {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.table_title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.table_head_cell {
+  text-align: left;
+  background-color: #000;
+  color: white;
+}
+
+.table_container {
+  width: 80%;
+
+  img {
+    width: 128px;
+    height: 30px;
+  }
+
+  span {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+.table_body_cell {
+  text-align: left;
+}
+
+.dict_table_page {
+  margin-top: 20px;
+}
