@@ -1,9 +1,12 @@
 package study.todo.querydsl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
@@ -619,6 +622,206 @@ public class QuerydslBasicTest {
         
         for (MemberDto memberDto : result) {
             System.out.println("memberDto = " + memberDto);
+        }
+    }
+
+    /**
+     * 동적 쿼리 - BooleanBuilder 사용
+     */
+    @Test
+    public void dynamicQuery_BooleanBuilder() {
+        String usernameParam = "member1";
+        Integer ageParam = 10;
+
+        List<Member> result = searchMember1(usernameParam, ageParam);
+        assertThat(result.size()).isEqualTo(1);
+
+    }
+
+    private List<Member> searchMember1(String usernameCond, Integer ageCond) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (usernameCond != null) {
+            builder.and(member.username.eq(usernameCond));
+        }
+
+        if (ageCond != null) {
+            builder.and(member.age.eq(ageCond));
+        }
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(builder)
+                .fetch();
+
+        return result;
+    }
+
+    /**
+     * 동적 쿼리 - Where 다중 파라미터 사용
+     */
+    @Test
+    public void dynamicQuery_WhereParam() {
+        String userNameParam = "member1";
+        Integer ageParam = 10;
+
+        List<Member> result = searchMember2(userNameParam, ageParam);
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+    private List<Member> searchMember2(String userNameParam, Integer ageParam) {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(usernameEq(userNameParam), ageEq(ageParam))
+                .fetch();
+
+        return result;
+    }
+
+    private Predicate usernameEq(String usernameCond) {
+        return usernameCond != null ? member.username.eq(usernameCond) : null;
+    }
+
+    private Predicate ageEq(Integer ageCond) {
+        return ageCond != null ? member.age.eq(ageCond) : null;
+    }
+
+    /**
+     * 조건 조합
+     * 1. 다른 메서드에서 재활용 가능
+     * 2. 쿼리 자체 가독성 높아짐
+     * 3. 조합 가능
+     */
+    private List<Member> searchMember3(String userNameParam, Integer ageParam) {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(allEq(userNameParam, ageParam))
+                .fetch();
+
+        return result;
+    }
+
+    private BooleanExpression usernameEq1(String usernameCond) {
+        return usernameCond != null ? member.username.eq(usernameCond) : null;
+    }
+
+    private BooleanExpression ageEq1(Integer ageCond) {
+        return ageCond != null ? member.age.eq(ageCond) : null;
+    }
+
+    private BooleanExpression allEq(String usernameCond, Integer ageCond) {
+        return usernameEq1(usernameCond).and(ageEq1(ageCond));
+    }
+
+    /**
+     * 수정 벌크
+     */
+    @Test
+    public void builkUpdate() {
+        //member1 = 10 -> DB member1
+        //member2 = 20 -> DB member2
+        //member3 = 30 -> DB member3
+        //member4 = 40 -> DB member4
+
+        long count = queryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        //member1 = 10 -> DB 비회원
+        //member2 = 20 -> DB 비회원
+        //member3 = 30 -> DB member3
+        //member4 = 40 -> DB member4
+
+        //bulk 연산 사용 후 초기화 진행
+        em.flush();
+        em.clear();
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        for (Member member : result) {
+            System.out.println("member = " + member);
+        }
+        //초기화 진행 안 할 경우, 영속성 컨텍스트가 우선권을 가져서 아래의 값이 나옴.
+        //member1 = 10 -> DB member1
+        //member2 = 20 -> DB member2
+        //member3 = 30 -> DB member3
+        //member4 = 40 -> DB member4
+    }
+
+    /**
+     * 삭제 벌크
+     */
+    @Test
+    public void bulkDelete() {
+        queryFactory
+                .delete(member)
+                .where(member.age.gt(10))
+                .execute();
+    }
+
+    /**
+     * 기존 컬럼 데이터 변형
+     */
+    @Test
+    public void bulkAdd() {
+        long result = queryFactory
+                .update(member)
+                //.set(member.age, member.age.add(1))
+                .set(member.age, member.age.multiply(2))
+                .execute();
+    }
+
+    /**
+     * SQL replace function 호출
+     */
+    @Test
+    public void sqlFunction1() {
+        List<String> result = queryFactory
+                .select(Expressions.stringTemplate("function('replace', {0}, {1}, {2})",
+                        member.username,
+                        "member", "M"))
+                .from(member)
+                .fetch();
+        
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+    }
+
+    /**
+     * SQL lower function 호출
+     */
+    @Test
+    public void sqlFunction2() {
+        List<String> result = queryFactory
+                .select(member.username)
+                .from(member)
+                .where(member.username.eq(Expressions.stringTemplate("function('lower', {0})",
+                                member.username)))
+                .fetch();
+
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+    }
+
+    /**
+     * SQL lower function 호출
+     */
+    @Test
+    public void sqlFunction3() {
+        List<String> result = queryFactory
+                .select(member.username)
+                .from(member)
+                .where(member.username.eq(member.username.lower()))
+                .fetch();
+
+        for (String s : result) {
+            System.out.println("s = " + s);
         }
     }
 }
