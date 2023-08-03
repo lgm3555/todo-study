@@ -3,8 +3,7 @@ package softeer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Gbc {
 
@@ -12,7 +11,6 @@ public class Gbc {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] mn = br.readLine().split(" ");
         int n = Integer.parseInt(mn[0]);
-        int m = Integer.parseInt(mn[1]);
 
         int result = 0;
         String temp = "";
@@ -62,5 +60,46 @@ public class Gbc {
             num++;
         }
         System.out.println(result);
+    }
+
+    public static void solution() throws IOException {
+        Scanner sc = new Scanner(System.in);
+        String[] nm = sc.nextLine().split(" ");
+        int n = Integer.parseInt(nm[0]);
+        int m = Integer.parseInt(nm[1]);
+
+        int max = 0;
+        Map<Integer, Integer> limitMap = new TreeMap<>();
+        int currentHeight = 0;
+        for (int i = 0; i < n; i++) {
+            String[] heightAndLimit = sc.nextLine().split(" ");
+            currentHeight += Integer.parseInt(heightAndLimit[0]);
+            limitMap.put(currentHeight, Integer.parseInt(heightAndLimit[1]));
+        }
+
+        int currentStart = 0;
+        int currentEnd = 0;
+        for (int i = 0; i < m; i++) {
+            String[] heightAndLimit = sc.nextLine().split(" ");
+            int paramH = Integer.parseInt(heightAndLimit[0]);
+            int paramL = Integer.parseInt(heightAndLimit[1]);
+
+            currentStart = currentEnd;
+            currentEnd += paramH;
+
+            int start = 0;
+            int end = 0;
+            for (int height : limitMap.keySet()) {
+                start = end;
+                end = height;
+
+                if (end > currentStart && start < currentEnd) {
+                    if (limitMap.get(height) < paramL) {
+                        max = Math.max(max, paramL - limitMap.get(height));
+                    }
+                }
+            }
+        }
+        System.out.println(max);
     }
 }
