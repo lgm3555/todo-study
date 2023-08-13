@@ -1,4 +1,4 @@
-package level3;
+package dfs_bfs;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

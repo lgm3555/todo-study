@@ -28,7 +28,7 @@ public class RoomReserve {
             i++;
         }
 
-        room.size()
+        room.size();
 
         Iterator<String> iterator = room.keySet().iterator();
         while (iterator.hasNext()) {
