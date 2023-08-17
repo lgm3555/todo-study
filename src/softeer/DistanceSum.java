@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 
-//TODO 효율성 + 오답
+//TODO 못풀음. 효율성 + 오답
 public class DistanceSum {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
