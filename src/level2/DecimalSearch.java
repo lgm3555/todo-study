@@ -3,7 +3,6 @@ package level2;
 import java.util.HashSet;
 import java.util.Iterator;
 
-//TODO 풀이중
 public class DecimalSearch {
     public static void main(String[] args) {
         DecimalSearch decimalSearch = new DecimalSearch();
