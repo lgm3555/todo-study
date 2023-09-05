@@ -14,6 +14,7 @@ services:
         source: "${PWD}/ELK/elasticsearch/config/elasticsearch.yml"
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
+      - "${PWD}/ELK/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
       - "${PWD}/ELK/elasticsearch/data1:/usr/share/elasticsearch/data"
       - "${PWD}/ELK/elasticsearch/nori/synonyms.txt:/usr/share/elasticsearch/config/synonyms.txt"
       - "${PWD}/ELK/elasticsearch/nori/user_dictionary.txt:/usr/share/elasticsearch/config/user_dictionary.txt"
@@ -44,6 +45,7 @@ services:
         source: "${PWD}/ELK/elasticsearch/config/elasticsearch.yml"
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
+      - "${PWD}/ELK/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
       - "${PWD}/ELK/elasticsearch/data2:/usr/share/elasticsearch/data"
       - "${PWD}/ELK/elasticsearch/nori/synonyms.txt:/usr/share/elasticsearch/config/synonyms.txt"
       - "${PWD}/ELK/elasticsearch/nori/user_dictionary.txt:/usr/share/elasticsearch/config/user_dictionary.txt"
