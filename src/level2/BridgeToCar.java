@@ -1,7 +1,10 @@
 package level2;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.Future;
 
 public class BridgeToCar {
     public static void main(String[] args) {
@@ -19,6 +22,21 @@ public class BridgeToCar {
      * @return
      */
     public int solution(int bridge_length, int weight, int[] truck_weights) {
+
+
+        String categories = "9411,9412,9535,10704,10731,10763,10975,11020,32097,59199,221566,221626,23231,49934,59009|57167,57246,58729,60433,60436,60439,60442";
+        String[] categoryLists = categories.split("\\|");
+
+        System.out.println("categoryList[0] = " + categoryLists[0]);
+        System.out.println("categoryList[1] = " + categoryLists[1]);
+
+        for (int i=0; i<categoryLists.length; i++) {
+            for (String category : categoryLists[i].split(",")) {
+                Integer categoryCode = Integer.parseInt(category);
+                System.out.println(categoryCode);
+            }
+        }
+
         Queue<Node> queue = new LinkedList<>();
         queue.add(new Node(truck_weights[0], 0));
 
