@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+MAINTAINER "gwangmin.lgm <rhdl142@danawa.com>"
+
+RUN apt-get update && apt-get install -y nginx \
+					 curl \
+					 vim
+
+RUN echo 'Docker Container Applicaton.' > /var/www/html/index.html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
