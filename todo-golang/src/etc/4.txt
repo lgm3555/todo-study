@@ -1,0 +1,2 @@
+INFO:: 2022/08/09 09:41:59 logging.go:30: TEST
+INFO:: 2022/08/09 09:41:59 logging.go:26: End of Program
