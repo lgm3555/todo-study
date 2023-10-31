@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    network_mode: host
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: test
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
