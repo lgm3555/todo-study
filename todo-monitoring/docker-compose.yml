@@ -1,0 +1,49 @@
+version: '2.1'
+services:
+  prometheus:
+    image: prom/prometheus:v2.17.1
+    user: "root"
+    security_opt:
+      - no-new-privileges
+    pids_limit: 30000
+    volumes:
+      - /home/danawa/monitoring/prometheus/:/etc/prometheus/
+      - /home/danawa/monitoring/prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: always
+    ports:
+      - 9090:9090
+  grafana:
+    image: grafana/grafana:7.1.5
+    user: "root"
+    security_opt:
+      - no-new-privileges
+    pids_limit: 30000
+    depends_on:
+      - prometheus
+    volumes:
+      - /home/danawa/monitoring/grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=danawa
+    restart: always
+    ports:
+      - 3000:3000
+
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    environment:
+      - "TZ=Asia/Seoul"
+    restart: always
+    security_opt:
+      - no-new-privileges
+    pids_limit: 30000
+    command:
+      - --collector.disable-defaults
+      - '--collector.cpu'
+      - '--collector.loadavg'
