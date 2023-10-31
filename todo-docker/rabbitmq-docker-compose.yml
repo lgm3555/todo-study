@@ -1,0 +1,14 @@
+version: "2.1"
+services:
+  rabbitmq:
+    image: rabbitmq:3.6-management
+    container_name: rabbitmq
+    user: "rabbitmq"
+    pids_limit: 30000
+    network_mode: host
+    environment:
+      - DEV_ADOPTED_ENV=OPERATING_SERVER
+      - LANG=ko_KR.euckr
+    ports:
+      - 5672:5672
+      - 15672:15672
