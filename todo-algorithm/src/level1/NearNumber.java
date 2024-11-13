@@ -2,7 +2,7 @@ package level1;
 
 public class NearNumber {
     public static void main(String[] args) {
-        solution("banana");
+        solution("banana ");
     }
 
     /**
