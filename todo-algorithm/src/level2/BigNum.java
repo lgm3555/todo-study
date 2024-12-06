@@ -10,7 +10,7 @@ package level2;
  */
 public class BigNum {
     public static void main(String[] args) {
-        solution("1231234", 3); //876
+        solution("1231234", 3); //3234
         /*
             (7) - (4-1) = 3 + start = 3
             (7 - 3) - (3-1) = 2 + start = 5
