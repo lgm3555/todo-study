@@ -1,37 +1,21 @@
 package level3;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class WordConvert {
     public static void main(String[] args) {
         System.out.println(solution("hit", "cog", new String[] {"hot","dot","dog","lot","log","cog"}));
-    }
-
-    public static ArrayList<ArrayList<String>> graph = new ArrayList<>();
-    public static boolean[] visit;
-    public static ArrayList<String> subWord = new ArrayList<>();
-    public static int answer = 0;
-
-    public static void dfs(int startNode, int check) {
-        Stack<Integer> stack = new Stack<>();
-        visit[startNode] = true;
-        stack.push(startNode);
-
-        while (!stack.isEmpty()) {
-            System.out.println("stack = " + stack);
-            int x = stack.pop();
-            System.out.println("x = " + x);
-            for (int i=0; i<graph.get(x).size(); i++) {
-                int y = subWord.indexOf(graph.get(x).get(i));
-                if (check == y) return;
-                if (!visit[y]) {
-                    visit[y] = true;
-                    stack.push(y);
-                }
-            }
-            answer++;
-            System.out.println("answer = " + answer);
-        }
+        /**
+         * hit -> hot, lot
+         *
+         * hot -> dot, lot
+         * dot -> hot, lot, dog
+         * dog -> dot, log, cog
+         * lot -> hot, dot, log
+         * log -> dog, lot, cog
+         * cog
+         */
     }
 
     /**
@@ -42,53 +26,65 @@ public class WordConvert {
      * @param words
      * @return
      */
+    private static final ArrayList<ArrayList<String>> graph = new ArrayList<>();
+    private static final HashMap<String, Integer> index = new HashMap<>();
     public static int solution(String begin, String target, String[] words) {
-
-        //target이 없을 경우 체크
+        int result = Integer.MAX_VALUE;
         boolean bFlag = true;
 
         for (int i=0; i<words.length; i++) {
-            subWord.add(words[i]);
-            if (words[i].equals(target)) bFlag = false;
+            index.put(words[i], i);
+            graph.add(checkWord(words[i], words));
+            if (target.equals(words[i])) bFlag = false;
         }
 
         if (bFlag) return 0;
 
-        subWord.add(begin);
+        //System.out.println("index = " + index);
+        //System.out.println("graph = " + graph);
 
-        visit = new boolean[subWord.size()];
+        ArrayList<String> startList = checkWord(begin, words);
+        for (String temp : startList) {
+            boolean[] visited = new boolean[words.length];
+            result = Math.min(result, revert(temp, target, visited, 1));
+        }
 
-        System.out.println("subWord.toString()) = " + subWord.toString());
+        System.out.println("result = " + result);
 
-        //그래프
-        for (int i=0; i<subWord.size(); i++) {
-            ArrayList<String> subList = new ArrayList<>();
-            for (int j=0; j<subWord.size(); j++) {
-                int same = 0;
-                if (!subWord.get(i).equals(subWord.get(j))) {
-                    for (int k=0; k<subWord.get(j).length(); k++) {
-                        if (subWord.get(i).charAt(k) == subWord.get(j).charAt(k)) {
-                            same++;
-                        }
-                    }
-                }
-                if (subWord.get(j).length() - 1 == same) {
-                    subList.add(subWord.get(j));
-                }
+        return result;
+    }
+
+    private static int revert(String now, String target, boolean[] visited, int answer) {
+        if (now.equals(target)) return answer;
+
+        ArrayList<String> tempList = graph.get(index.get(now));
+        int minStep = Integer.MAX_VALUE;
+
+        for (String temp : tempList) {
+            int nextIndex = index.get(temp);
+            if (!visited[nextIndex]) {
+                visited[nextIndex] = true;
+                minStep = revert(temp, target, visited, answer+1);
+                visited[nextIndex] = false;
             }
-            graph.add(subList);
         }
+        return minStep;
+    }
 
-        for (int i=0; i<graph.size(); i++) {
-            System.out.println(i + " _ " + subWord.get(i) + " = " + graph.get(i).toString());
+    private static ArrayList<String> checkWord(String word, String[] words) {
+        ArrayList<String> list = new ArrayList<>();
+        char[] a = word.toCharArray();
+
+        for (int j=0; j<words.length; j++) {
+            int flag = 0;
+            char[] b = words[j].toCharArray();
+
+            for (int k=0; k<word.length(); k++) {
+                if (a[k] != b[k]) flag++;
+            }
+
+            if (flag == 1) list.add(words[j]);
         }
-
-        System.out.println();
-        System.out.println("subWord.indexOf(target) = " + subWord.indexOf(target));
-        System.out.println();
-
-        dfs(subWord.size()-1, subWord.indexOf(target));
-
-        return answer+1;
+        return list;
     }
 }
