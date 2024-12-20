@@ -136,6 +136,9 @@ public class Dijkstra_0627 {
         dijkstra.addEdgeUndirected(2, 4, 1);
         dijkstra.addEdgeUndirected(5, 1, 1);
 
+        System.out.println("distance = " + Arrays.toString(distance));
+        System.out.println("graph = " + graph);
+
         //#1출발 노드 설정 : 1
         dijkstra.dijkstra(1);
 

@@ -1,1 +1,1 @@
-docker-compose --env-file ELK/.env up -d
+docker-compose --env-file .env up -d
