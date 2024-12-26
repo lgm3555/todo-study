@@ -1,6 +1,7 @@
 package sample.cafekisok.unit;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.cafekisok.unit.beverage.Americano;
 import sample.cafekisok.unit.beverage.Latte;
@@ -23,6 +24,9 @@ class CafeKioskTest {
         System.out.println(">>> 담긴 음료 : " + cafeKiosk.getBeverages().get(0).getName());
     }
 
+    //@DisplayName("음료 1개 추가 테스트")
+    // 테스트 행위에 대한 결과까지 기술.
+    @DisplayName("음료 1개를 추가하면 주문 목록에 담긴다.")
     @Test
     void add() {
         CafeKiosk cafeKiosk = new CafeKiosk();
@@ -79,6 +83,28 @@ class CafeKioskTest {
         assertThat(cafeKiosk.getBeverages()).isEmpty();
     }
 
+    @DisplayName("주문 목록에 담긴 상품들의 총 금액을 계산할 수 있다.")
+    @Test
+    void calculateTotalPrice() {
+        // given
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        Latte latte = new Latte();
+
+        cafeKiosk.add(americano);
+        cafeKiosk.add(latte);
+
+        // when
+        int totalPrice = cafeKiosk.calculateTotalPrice();
+
+        // then
+        assertThat(totalPrice).isEqualTo(8500);
+    }
+
+    //@DisplayName("특정 시간 이전에 주문을 생성하면 실패한다")
+    // 도메인 용어를 사용하여 한층 추상화된 내용을 담기.(메서드 자체의 관점보다 도메인 정책 관점으로)
+    // 테스트 현상을 중점으로 기술하지 말것.(실패한다 X)
+    @DisplayName("영업 시작 시간 이전에는 주문을 생성할 수 없다.")
     @Test
     void createOrder() {
         CafeKiosk cafeKiosk = new CafeKiosk();
